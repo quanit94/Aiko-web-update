@@ -1,0 +1,10 @@
+$(document).ready(function(){
+    $("#confirmRemoveUser").attr("disabled","disabled");
+    $('.chooseUser').click(function(){
+        if($('.chooseUser').is(':checked')){
+            $("#confirmRemoveUser").removeAttr("disabled");
+        }else{
+            $("#confirmRemoveUser").attr("disabled","disabled");
+        }
+    })
+})
