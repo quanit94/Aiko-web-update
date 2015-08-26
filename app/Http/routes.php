@@ -92,6 +92,9 @@ Route::group(array('prefix' => 'partner', 'namespace' => 'Partner', 'middleware'
         'getRemove'     => 'get.partner.promotion.remove',
         'postRemove'    => 'post.partner.promotion.remove',
     ]);
+    Route::controller('review','ReviewController', [
+        'getReview'    => 'get.partner.review.review',
+    ]);
 });
 
 

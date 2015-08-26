@@ -30,6 +30,8 @@ class Connection
         'addRestaurant'             =>  'addRestaurant',
         'restaurantGetList'         =>  'restaurant/getList',
         'restaurantDelete'          =>  'restaurant/delete/',
+        'updateRestaurant'          =>  'restaurant/update/',
+        'getRestaurantById'         =>  'restaurant/',
 
         'getPromotionOfRestaurant'  =>  'promotion/getPromoOfRestaurant?item_id=',
         'getPromotionById'          =>  'promotion/getPromotionById?promotion_id=',
@@ -123,10 +125,18 @@ class Connection
         }
         return $this->host.static::$url['restaurantGetList'];
     }
+    public function getRestaurantById($idRestaurant){
+        return $this->host.static::$url['getRestaurantById'].$idRestaurant;
+    }
 
     public function restaurantDelete($id){
         return $this->host.static::$url['restaurantDelete']."$id";  
     }
+
+    public function updateRestaurant($id){
+        return $this->host.static::$url['updateRestaurant'].$id;
+    }
+
     /*=================== End Restaurant =========================================*/
 
     /*=================== Promotion =========================================*/

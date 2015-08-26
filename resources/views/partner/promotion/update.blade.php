@@ -119,16 +119,19 @@
                     $('.name').focus();
                     return false;
                 }
-                else if($startdate == ''){
-                    $('.report-startdate').text("Enter start date!");
-                    $('.start_date').focus();
-                    return false;
-                }
-                else if($enddate == ''){
-                    $('.report-enddate').text("Enter end date!");
-                    $('.end_date').focus();
-                    return false;
-                }
+                else
+                    if($startdate != '' || $enddate != ''){
+                       if($startdate == ''){
+                            $('.report-startdate').text("Enter start date!");
+                            $('.start_date').focus();
+                            return false;
+                        }
+                        else if($enddate == ''){
+                            $('.report-enddate').text("Enter end date!");
+                            $('.end_date').focus();
+                            return false;
+                        } 
+                    }
                 else if(new Date($enddate).getTime() <= new Date($startdate).getTime()){
                     $('.report-enddate').text("End date must be bigger than start date!");
                     $('.end_date').focus();
@@ -149,11 +152,6 @@
                     $('.rate_discount').focus();
                     return false;
                 }
-                else if($image.val() == ''){
-                            $('.report-image').text("Please choose an image!");
-                            $('.image').focus();
-                            return false;
-                        }
                 return true;
             });
         });

@@ -16,26 +16,13 @@
                 </div>
                 </div><!-- /.box-header -->
                 @include('message.message')
-                @if(Session::has('flash_success'))
-                    <div class="box-header">
-                        <p class="alert alert-success" style="max-width:400px;">{{Session::get('flash_success')}}</p>
-                    </div>
-                @elseif(@Session::has('flash_error'))
-                    <div class="box-header">
-                        <p class="alert alert-error " style="max-width:400px;">{{Session::get('flash_error')}}</p>
-                    </div>
-                @endif
 
                 <div class="box-body table-responsive no-padding">
                         <?php
                             // echo $idRestaurant;  
                             // if(!empty($ArrayListPromotion['data']))
                             //     $idRestaurant = $ArrayListPromotion['data'][0]['_id'];
-
                         ?>
-                  <!--   <pre>
-                        {{var_dump($ArrayListPromotion)}}
-                    </pre>     -->
 
                     {!! Form::open(array('route' => array('post.partner.promotion.remove', $idRestaurant))) !!}
 
@@ -62,12 +49,17 @@
 
                                         <th>{{$key+1}}</th>
                                         <th>{{$eachPromotion['name']}}</th>
-                                        <th>{{$eachPromotion['start_date']}}</th>
-                                        <th>{{$eachPromotion['end_date']}}</th>
+                                        <?php
+                                            $startDate = date_create($eachPromotion['start_date']);
+
+                                            $endDate   = date_create($eachPromotion['end_date']);
+                                        ?>
+                                        <th>{{date_format($startDate,"Y/m/d")}}</th>
+                                        <th>{{date_format($endDate,"Y/m/d")}}</th>
                                         <th>{{$eachPromotion['quantity']}}</th>
                                         <th>{{$eachPromotion['rate_discount']}}</th>
                                         <th>{{$eachPromotion['description']}}</th>
-                                        <th><img src="{{$eachPromotion['img']}}" width="200px" /></th>
+                                        <th><img src="{{$eachPromotion['img']}}" width="100px" height="100px" /></th>
                                         <th><a href="{{route('get.partner.promotion.update', ['idPromotion' => $eachPromotion['_id']])}}"><i class="fa fa-edit"></i></a></th>
                                         <th><input type="checkbox" class="chooseUser" name="remove[{{ $eachPromotion['_id'] }}]"></th>
                                         

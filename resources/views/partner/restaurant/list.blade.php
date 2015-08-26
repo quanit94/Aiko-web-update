@@ -26,6 +26,7 @@
                                     <th>Email</th>
                                     <th>Telephone</th>
                                     <th>Promotion</th>
+                                    <th>Review</th>
                                     <th>Sửa</th>
                                     <th>Xóa</th>
                                 </tr>
@@ -45,7 +46,8 @@
                                         @endforeach
                                     </td>
                                     <td><a href="{{ route('get.partner.promotion.list', array($eachRestaurant['_id'])) }}">Chi tiết</a></td>
-                                    <td><a href="{{ route('get.partner.restaurant.update', array($eachRestaurant['_id'])) }}"><i class="fa fa-edit"></i></a></td>
+                                    <td><a href="{{ route('get.partner.review.review', array($eachRestaurant['_id'])) }}">Review</a></td>
+                                    <td><a href="{{ route('get.partner.restaurant.update', array('id' => $eachRestaurant['_id'])) }}"><i class="fa fa-edit"></i></a></td>
                                     <td><input type="checkbox" value="1" class="chooseUser" name="remove[{{ $eachRestaurant['_id'] }}]"></td>
                                 </tr>
                                 @include('partner.restaurant.eachRestaurant', array(

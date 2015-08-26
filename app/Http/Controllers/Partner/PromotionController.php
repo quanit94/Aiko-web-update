@@ -20,6 +20,9 @@ class PromotionController extends Controller
 
     public function getList($idRestaurant) {
     	$arrayMessageFromSever = Method::httpGet(Connection::getPromotionOfRestaurant($idRestaurant), true);
+        // echo "<pre>";
+        //     var_dump($arrayMessageFromSever);
+        // echo "</pre>";
         return view('partner.promotion.list', ['ArrayListPromotion' => $arrayMessageFromSever, 'titlePage' => 'Promotion in Restaurant', 'idRestaurant' => $idRestaurant]);
     }
 
@@ -33,7 +36,7 @@ class PromotionController extends Controller
     public function getCreate($idRestaurant) {
         $arrayMessageFromSever = Method::httpGet(Connection::getPromotionOfRestaurant($idRestaurant), true);
         if(!empty($arrayMessageFromSever['data']))
-            return redirect()->route('get.partner.promotion.list', $idRestaurant)->with('flash_error', 'Each Restaurant has only one of campaign promotion');
+            return redirect()->route('get.partner.promotion.list', $idRestaurant)->with('message_error', 'Each Restaurant has only one of campaign promotion');
         return view('partner.promotion.create', ['titlePage' => 'Add Promotion', 'idRestaurant' => $idRestaurant]);
     }
 
@@ -54,32 +57,31 @@ class PromotionController extends Controller
                 $dataInfoProAdd['img'] = $urlFile."/".$nameFile;
             }
         }
-        
         $arrayMessageFromSever = Method::httpPost(Connection::addPromotion(), $dataInfoProAdd, true);
         // echo "<pre>";
         //     var_dump($dataInfoProAdd);
         // echo "</pre>";
         // die();
         $result = $this->check->addPromotion($arrayMessageFromSever);
-        return redirect()->route('get.partner.promotion.list', $idRestaurant)->with('flash_success', 'Add Promotion Successful!');
+        return redirect()->route('get.partner.promotion.list', $idRestaurant)->with('message_success', 'Add Promotion Successful!');
     }
     public function getUpdate($idPromotion) {
         $arrayMessageFromSever = Method::httpGet(Connection::getPromotionById($idPromotion), true);
         $idRestaurant = $arrayMessageFromSever['data']['item_id'];
-
         return view('partner.promotion.update', ['titlePage' => 'Update Promotion', 'idRestaurant' => $idRestaurant, 'InfoPromotion' => $arrayMessageFromSever['data']]);
     }
 
     public function postUpdate($idPromotion) {
         $dataInfoUser = Cookie::get("dataFromSever");// get data cookie 
 
+        $oldData = Method::httpGet(Connection::getPromotionById($idPromotion), true);// lay gia tri cu
+
         $dataInfoUpdate = $this->request->except('confirm','_token'); 
         $idRestaurant = $dataInfoUpdate['item_id'];
-        // echo "<pre>";
-        //     var_dump($dataInfoUpdate);
-        // echo "</pre>";
-        // die();
-        if ($this->request->hasFile('img')) {
+        if($dataInfoUpdate['start_date'] == '') $dataInfoUpdate['start_date'] = $oldData['data']['start_date'];
+        if($dataInfoUpdate['end_date'] == '') $dataInfoUpdate['end_date'] = $oldData['data']['end_date'];
+
+        if($this->request->hasFile('img')) {
             $img = $dataInfoUpdate['img'];
             echo $img;
             if ($this->request->file('img')->isValid()){
@@ -91,23 +93,17 @@ class PromotionController extends Controller
                 $dataInfoUpdate['img'] = $urlFile."/".$nameFile;
 
             }
+        }else{ // neu nguoi dung khong nhap anh thi lay anh cu
+            $dataInfoUpdate['img'] = $oldData['data']['img'];
         }
-
-        // if ($this->request->input('img')->isValid()) {
-        //     $destinationPath = public_path(); // upload path
-        //     $extension = $this->request->input('img')->getClientOriginalExtension(); // getting image extension
-        //     $now = new \DateTime('now'); // call time now
-        //     $fileName = $now->format('YmdHis').md5($dataInfoUser['data']['email']).rand(11111,99999).'.'.$extension; // renameing image
-        //     $this->request->input('img')->move($destinationPath.'/partner/photo/promotion', $fileName); // uploading file to given path
-        //     $urlFile = url('public/partner/photo/promotion');
-        //     $dataInfoUpdate['img'] = $urlFile."/".$fileName;
-        //     echo $dataInfoUpdate['img'];
-        // }
-
-        // die();
+        
         $arrayMessageFromSever = Method::httpPost(Connection::updatePromotion($idPromotion), $dataInfoUpdate, true);
         
         $result = $this->check->updatePromotion($arrayMessageFromSever);
+        // echo "<pre>";
+        //     var_dump($result);
+        // echo "</pre>";
+        // die();
         return redirect()->route('get.partner.promotion.list', $idRestaurant);
     }
 
@@ -119,7 +115,7 @@ class PromotionController extends Controller
             $result = $this->check->deletePromotion($arrayMessageFromSever);
                
         }
-        return redirect()->route('get.partner.promotion.list', $idRestaurant)->with('flash_success', 'Delete Promotion Successful!');
+        return redirect()->route('get.partner.promotion.list', $idRestaurant)->with('message_success', 'Delete Promotion Successful!');
     
     }
 

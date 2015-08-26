@@ -63,6 +63,27 @@ class CheckController extends Controller
 
         return view('errors.other');   
     }
+
+    public function getRestaurantById($arrayMessageFromSever){
+        if($result = $this->checkStatus401($arrayMessageFromSever) != false){
+            return $result;
+        }
+        if($arrayMessageFromSever['code'] == 200) {
+            return 200;
+        }elseif($arrayMessageFromSever['code'] == 400){ // "Not have enough parameters"
+            return abort(400);
+        }elseif($arrayMessageFromSever['code'] == 500){ // Database exception
+            return abort(500);
+        }elseif($arrayMessageFromSever['code'] == 404){ // Database exception
+            return abort(404);
+        }elseif($arrayMessageFromSever['code'] == 403){ // Database exception
+            return abort(403);
+        }
+        return view('errors.other');   
+    }
+
+
+
 /*================== End Restaurant =========================================================*/
 
 /*================== Review =========================================================*/
