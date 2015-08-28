@@ -20,20 +20,42 @@
                                 <h4 class="media-heading text-center">Thông tin chi tiết</h4>                               
                                     <dl class="dl-horizontal">
                                         <dt>Menu</dt>
-                                        <dd><img class="media-object" src="{!!$eachRestaurant['menus']['0']!!}" alt="image" height="200" width="200"></dd>
+                                            <dd><img class="media-object" src="{!!$eachRestaurant['menus']['0']!!}" alt="image" height="200" width="200"></dd>
                                         <dt>Email</dt>
-                                        <dd>{!!$eachRestaurant['emails']['0']!!}</dd>
+                                            <dd>{!!$eachRestaurant['emails']['0']!!}</dd>
                                         <dt>Phone</dt>
-                                        <dd>{!!$eachRestaurant['phones']['0']!!}</dd>
-                                        <dt>Địa chỉ</dt>
-                                        <dd>{!!$eachRestaurant['address']['num']."-".$eachRestaurant['address']['road']."-".$eachRestaurant['address']['district']."-".$eachRestaurant['address']['city']!!}</dd>
-                                    </dl>
-                            
+                                            <dd>{!!$eachRestaurant['phones']['0']!!}</dd>
+                                        <dt>Address</dt>
+                                            <dd>{!!$eachRestaurant['address']['num']."-".$eachRestaurant['address']['road']."-".$eachRestaurant['address']['district']."-".$eachRestaurant['address']['city']!!}</dd>
+                                        <dt>Meal</dt>
+                                            <dd><input type="checkbox" disabled checked="{{$eachRestaurant['meals']['breakfast']}}" />Bữa sáng</dd>
+                                            <dd><input type="checkbox" disabled checked="{{$eachRestaurant['meals']['lunch']}}" /> Bữa trưa</dd>
+                                            <dd><input type="checkbox" disabled checked="{{$eachRestaurant['meals']['dinner']}}" /> Bữa tối</dd>
+                                        <dt>Food Style</dt>
+                                            @foreach ($eachRestaurant['categories']['food_style'] as $key => $value)
+                                                <dd>{{$value}}</dd>
+                                            @endforeach
+                                        <dt>Country Style</dt>
+                                            @foreach ($eachRestaurant['categories']['country_style'] as $key => $value)
+                                                <dd>{{$value}}</dd>
+                                            @endforeach
+                                        <dt>Restaurant Style</dt>
+                                            @foreach ($eachRestaurant['categories']['restaurant_type'] as $key => $value)
+                                                <dd>{{$value}}</dd>
+                                            @endforeach
+                                        <dt>Activity Time</dt>
+                                            <dd>{{$eachRestaurant['information']['open_hour']}} - {{$eachRestaurant['information']['close_hour']}}</dd>
+                                        <dt>Prepare Time</dt> 
+                                            <dd>{{$eachRestaurant['information']['prepared_time']}}</dd>
+
+                                    </dl>                          
                             </div>
+                           
                         </div>
                     </div>
 
                 </dl>
+
             </div>
             <div class="modal-footer">
             </div>
