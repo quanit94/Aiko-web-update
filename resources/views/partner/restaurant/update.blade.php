@@ -30,7 +30,7 @@ $id = $restaurantOld['data']['_id'];
                 <div class="form-group">
 
                     <label>Image</label>
-                    <img class="media-object" src="{!!$restaurantOld['data']['cover_photo']!!}" alt="image" height="200" width="600"></br>
+                    <img class="media-object" src="{!!$restaurantOld['data']['cover_photo']!!}" alt="image" height="200" width="200"></br>
                     {!! Form::file('cover_photo') !!}
                     <p class="help-block">Upload restaurant's image at here</p>
                 </div>

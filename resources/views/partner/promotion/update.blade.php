@@ -18,6 +18,9 @@
 
                     <!-- form start -->
                     @include('message.message')
+                    <div class="box-header">
+                        <a href="{{route('get.partner.promotion.list', array('idRestaurant' => $idRestaurant))}}"><i class="fa fa-reply-all" style="font-size: 0.8em"></i>Back to Promotion</a>
+                    </div>
                     <?php $idPromotion = $InfoPromotion['_id']; ?>
                     {!! Form::open(array('route'=> array('post.partner.promotion.update', $idPromotion), 'files' => true)) !!}
                     <div class="box-body">
@@ -80,9 +83,9 @@
                     </div>
 
                     <div class="box-footer">
-                        <input name="confirm" class="btn btn-primary" type="submit" value="Confirm" id="submit">
+                        <input name="confirm" class="btn btn-primary" type="submit" value="Confirm" id="confirm">
                     </div>               
-                    <a href="{{route('get.partner.promotion.list', array('idRestaurant' => $idRestaurant))}}" class="btn btn-primary">Back to Promotion</a>         
+                             
                     {!! Form::close() !!}
              </div>
        </div>
@@ -90,70 +93,52 @@
  @endsection
 
  @section('bonusJs')
+ 
     <script type="text/javascript">
         $(document).ready(function(){
+
+            $("#confirm").on('click', function(){
+       
+                // $('.report-name').text('');
+                $('.report-startdate').text('');
+                $('.report-enddate').text('');
+                // $('.report-quantity').text('');
+                // $('.report-ratediscount').text('');
+                // $('.report-description').text('');
+           
+                // $name = $('.name').val();
+                $startDate = $('.start_date').val();
+                $endDate = $('.end_date').val();
+                // $quantity = $('.quantity').val();
+                // $rateDiscount = $('.rate_discount').val();
+                // $description = CKEDITOR.instances.description.getData();
+                // alert($name);
+                //validate name
+              
+                // if(!validateName($name)) return false;
+
+                // validate date
+                if($startdate != '' || $enddate != ''){
+                    if(!validateStartDate($startDate)) return false;
+                    if(!validateEndDate($startDate, $endDate)) return false;
+                }
+                // validate quantity empty
+                // if(!validateQuantity($quantity)) return false;
+                //validate rate empty
+                // if(!validateRateDiscount($rateDiscount)) return false;
+                //validate description empty
+                // if(!validateDescription($description)) return false;
+                
+             
+                return true;
+            });
+
             $(".roleUser").click(function(){
                 if(!$("#admin").is(":checked") && !$("#partner").is(":checked")){
                     $("#partner").click();
                 }
             });
-             $("#submit").on('click', function(){
-               
-                $('.report-name').text('');
-                $('.report-startdate').text('');
-                $('.report-enddate').text('');
-                $('.report-quantity').text('');
-                $('.report-ratediscount').text('');
-                $('.report-description').text('');
-                $('.report-image').text('');
-                $name = $('.name').val();
-                $startdate = $('.start_date').val();
-                $enddate = $('.end_date').val();
-                $quantity = $('.quantity').val();
-                $rate_discount = $('.rate_discount').val();
-                $description = $('.description').val();
-                $image = $('input[type=file]');
-                //validate
-                if($name == ''){
-                    $('.report-name').text("Enter your name!");
-                    $('.name').focus();
-                    return false;
-                }
-                else
-                    if($startdate != '' || $enddate != ''){
-                       if($startdate == ''){
-                            $('.report-startdate').text("Enter start date!");
-                            $('.start_date').focus();
-                            return false;
-                        }
-                        else if($enddate == ''){
-                            $('.report-enddate').text("Enter end date!");
-                            $('.end_date').focus();
-                            return false;
-                        } 
-                    }
-                else if(new Date($enddate).getTime() <= new Date($startdate).getTime()){
-                    $('.report-enddate').text("End date must be bigger than start date!");
-                    $('.end_date').focus();
-                    return false;
-                }
-                else if($quantity == ''){
-                    $('.report-quantity').text("Enter quantity!");
-                    $('.quantity').focus();
-                    return false;
-                }
-                else if($rate_discount == ''){
-                    $('.report-ratediscount').text("Enter rate discount!");
-                    $('.rate_discount').focus();
-                    return false;
-                }
-                else if($description == ''){
-                    $('.report-ratediscount').text("Enter rate discount!");
-                    $('.rate_discount').focus();
-                    return false;
-                }
-                return true;
-            });
+             
         });
     </script>
 

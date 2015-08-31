@@ -28,7 +28,9 @@
 
                     <div id="searchResult">
                         <div class="box-header">
-                            <a href="{{route('get.partner.promotion.create', array('idRestaurant' => $idRestaurant))}}" class="btn btn-primary">Add new promotion</a>
+                            <a href="{{route('get.partner.promotion.create', array('idRestaurant' => $idRestaurant))}}"><i class="fa fa-plus" style="font-size: 0.8em"></i> Add new promotion</a> | 
+
+                             <a href="{{route('get.partner.restaurant.list', $idRestaurant)}}"><i class="fa fa-reply-all" style="font-size: 0.8em"></i> List Restaurant</a>
                         </div>
                         <table class="table table-hover">
                             <tbody>
@@ -40,7 +42,6 @@
                                         <th>Quantity</th>
                                         <th>Rate Discount</th>
                                         <th>Description</th>
-                                        <th>Image</th>
                                         <th>Sửa</th>
                                         <th>Xóa</th>
                                     </tr>
@@ -59,7 +60,6 @@
                                         <th>{{$eachPromotion['quantity']}}</th>
                                         <th>{{$eachPromotion['rate_discount']}}</th>
                                         <th>{{$eachPromotion['description']}}</th>
-                                        <th><img src="{{$eachPromotion['img']}}" width="100px" height="100px" /></th>
                                         <th><a href="{{route('get.partner.promotion.update', ['idPromotion' => $eachPromotion['_id']])}}"><i class="fa fa-edit"></i></a></th>
                                         <th><input type="checkbox" class="chooseUser" name="remove[{{ $eachPromotion['_id'] }}]"></th>
                                         
@@ -72,19 +72,20 @@
                         </table>
                         
                         <div class="box-footer pull-right" id="Submit">
-                            <input type="submit" id="Submit" value="Submit" class="btn btn-primary" />
+                            <input type="submit" id="submit" value="Submit" class="btn btn-primary" />
                         </div>
                     </div><!-- /#result -->
                     {!! Form::close() !!}
                     <div class="box-footer pull-left" id="hiddenSearch" style="border-top: none">
                          <!-- <p><a href="" style="color: gray" class="confirm"><i class="fa fa-trash-o"></i> Xóa tất cả</a></p> -->
                         <p style="color: gray"><strong>Tổng :</strong> {{ count($ArrayListPromotion['data']) }} promotions</p>
+
                     </div>
                     
                 
                 </div><!-- /.box-body -->
                 <div class="box-header pull-left">
-                    <a href="{{route('get.partner.restaurant.list', $idRestaurant)}}" class="btn btn-primary">Back to List Restaurant</a>
+                    
                 </div>  
                 
             </div>
@@ -98,7 +99,7 @@
         var base_url = "<?php echo route('get.admin.search.list'); ?>";
         $(document).ready(function(){
             $('#search_page').val('list');
-            $('#Submit').on('click', function(){
+            $('#submit').on('click', function(){
                 $check = $('.chooseUser').is(":checked");
                 if(!$check){
                     alert("Not promotion is selected!");

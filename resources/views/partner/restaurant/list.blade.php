@@ -86,5 +86,4 @@
         })
     </script>
     <script type="text/javascript" src="{{ url('public/admin/js/ajax.js') }}"></script>
-   
 @stop

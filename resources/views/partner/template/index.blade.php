@@ -99,6 +99,8 @@
     <script src="{{ url('public/admin/js/Chart.min.js')}}" type="text/javascript"></script>
     <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
     <script src="{{ url('public/admin/js/demo.js')}}" type="text/javascript"></script>
+    
+    <script src="{{ url('public/admin/js/validatePromotion.js')}}" type="text/javascript"></script>
     @section('bonusJs')
     @show
   </body>

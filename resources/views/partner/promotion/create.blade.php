@@ -16,10 +16,13 @@
                 <div class="box-header">
                     <h3 class="box-title">{{ $titleForm }}</h3>
                 </div><!-- /.box-header -->
-
+                    
                     <!-- form start -->
                     @include('message.message')
-
+                    <div class="box-header">
+                        <a href="{{route('get.partner.promotion.list', array('idRestaurant' => $idRestaurant))}}"><i class="fa fa-reply-all" style="font-size: 0.8em"></i> Back to Promotion</a>
+                    </div>
+                    
                     {!! Form::open(array('route' => 'post.partner.promotion.create', 'files' => true)) !!}
                     <div class="box-body">
                         <div class="form-group">
@@ -57,7 +60,7 @@
 
                         <div class="form-group">
                             <label>Description</label>
-                            {!! Form::textarea('description', 'Description about promotion of your restaurant...', array('class' => 'description', 'rows' => '3')) !!}
+                            {!!Form::textarea('description', '', array('class'=> 'description'))!!}
                         </div>
                         <span class="report-description"></span>
                         
@@ -67,17 +70,17 @@
                         
                         <div class="form-group">
                             <label>Image</label>
-                            <input type="file" name="img" class="image"/> 
+                            <input type="file" name="img" class="image" /> 
                         </div>
                         <span class="report-image"></span>
                         </div>
                     </div>
 
-
+                  
                     <div class="box-footer">
                         <input name="confirm" class="btn btn-primary" type="submit" value="Confirm" id="submit">
                     </div>               
-                    <a href="{{route('get.partner.promotion.list', array('idRestaurant' => $idRestaurant))}}" class="btn btn-primary">Back to Promotion</a>         
+                             
                     {!! Form::close() !!}
              </div>
        </div>
@@ -85,11 +88,12 @@
  @endsection
 
  @section('bonusJs')
+
     <script type="text/javascript">
+       
         $(document).ready(function(){
 
             $("#submit").on('click', function(){
-               
                 $('.report-name').text('');
                 $('.report-startdate').text('');
                 $('.report-enddate').text('');
@@ -98,53 +102,20 @@
                 $('.report-description').text('');
                 $('.report-image').text('');
                 $name = $('.name').val();
-                $startdate = $('.start_date').val();
-                $enddate = $('.end_date').val();
+                $startDate = $('.start_date').val();
+                $endDate = $('.end_date').val();
                 $quantity = $('.quantity').val();
-                $rate_discount = $('.rate_discount').val();
-                $description = $('.description').val();
+                $rateDiscount = $('.rate_discount').val();
+                $description = CKEDITOR.instances.description.getData();
                 $image = $('input[type=file]');
                 //validate
-                if($name == ''){
-                    $('.report-name').text("Enter your name!");
-                    $('.name').focus();
-                    return false;
-                }
-                else if($startdate == ''){
-                    $('.report-startdate').text("Enter start date!");
-                    $('.start_date').focus();
-                    return false;
-                }
-                else if($enddate == ''){
-                    $('.report-enddate').text("Enter end date!");
-                    $('.end_date').focus();
-                    return false;
-                }
-                else if(new Date($enddate).getTime() <= new Date($startdate).getTime()){
-                    $('.report-enddate').text("End date must be bigger than start date!");
-                    $('.end_date').focus();
-                    return false;
-                }
-                else if($quantity == ''){
-                    $('.report-quantity').text("Enter quantity!");
-                    $('.quantity').focus();
-                    return false;
-                }
-                else if($rate_discount == ''){
-                    $('.report-ratediscount').text("Enter rate discount!");
-                    $('.rate_discount').focus();
-                    return false;
-                }
-                else if($description == ''){
-                    $('.report-ratediscount').text("Enter rate discount!");
-                    $('.rate_discount').focus();
-                    return false;
-                }
-                else if($image.val() == ''){
-                            $('.report-image').text("Please choose an image!");
-                            $('.image').focus();
-                            return false;
-                        }
+                if(!validateName($name)) return false;
+                if(!validateStartDate($startDate)) return false;
+                if(!validateEndDate($startDate, $endDate)) return false;
+                if(!validateQuantity($quantity)) return false;
+                if(!validateRateDiscount($rateDiscount)) return false;
+                if(!validateDescription($description)) return false;
+                if(!validateImage($image)) return false;
                 return true;
             });
             $(".roleUser").click(function(){

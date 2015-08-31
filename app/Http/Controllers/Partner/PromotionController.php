@@ -80,6 +80,10 @@ class PromotionController extends Controller
         $idRestaurant = $dataInfoUpdate['item_id'];
         if($dataInfoUpdate['start_date'] == '') $dataInfoUpdate['start_date'] = $oldData['data']['start_date'];
         if($dataInfoUpdate['end_date'] == '') $dataInfoUpdate['end_date'] = $oldData['data']['end_date'];
+        if($dataInfoUpdate['name'] == '') $dataInfoUpdate['name'] = $oldData['data']['name'];
+        if($dataInfoUpdate['description'] == '') $dataInfoUpdate['description'] = $oldData['data']['description'];
+        if($dataInfoUpdate['quantity'] == 0) $dataInfoUpdate['quantity'] = $oldData['data']['quantity'];
+        if($dataInfoUpdate['rate_discount'] == 0) $dataInfoUpdate['rate_discount'] = $oldData['data']['rate_discount'];
 
         if($this->request->hasFile('img')) {
             $img = $dataInfoUpdate['img'];
@@ -101,7 +105,7 @@ class PromotionController extends Controller
         
         $result = $this->check->updatePromotion($arrayMessageFromSever);
         // echo "<pre>";
-        //     var_dump($result);
+        //     var_dump($arrayMessageFromSever);
         // echo "</pre>";
         // die();
         return redirect()->route('get.partner.promotion.list', $idRestaurant);
