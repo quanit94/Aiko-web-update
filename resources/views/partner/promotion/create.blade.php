@@ -1,3 +1,4 @@
+
 @extends('partner.template.index')
 
 @section('bonusCss')

@@ -141,7 +141,7 @@ class Connection
 
     /*=================== Promotion =========================================*/
     public function getPromotionOfRestaurant($item_id){
-        return $this->host.static::$url['getPromotionOfRestaurant'].$item_id;
+        return $this->host.static::$url['getPromotionOfRestaurant'].$item_id."&all=true";
     }
 
     public function getPromotionById($promotion_id){

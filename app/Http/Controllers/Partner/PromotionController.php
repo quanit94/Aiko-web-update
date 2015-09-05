@@ -35,8 +35,6 @@ class PromotionController extends Controller
 
     public function getCreate($idRestaurant) {
         $arrayMessageFromSever = Method::httpGet(Connection::getPromotionOfRestaurant($idRestaurant), true);
-        if(!empty($arrayMessageFromSever['data']))
-            return redirect()->route('get.partner.promotion.list', $idRestaurant)->with('message_error', 'Each Restaurant has only one of campaign promotion');
         return view('partner.promotion.create', ['titlePage' => 'Add Promotion', 'idRestaurant' => $idRestaurant]);
     }
 

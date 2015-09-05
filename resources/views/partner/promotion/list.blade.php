@@ -18,11 +18,7 @@
                 @include('message.message')
 
                 <div class="box-body table-responsive no-padding">
-                        <?php
-                            // echo $idRestaurant;  
-                            // if(!empty($ArrayListPromotion['data']))
-                            //     $idRestaurant = $ArrayListPromotion['data'][0]['_id'];
-                        ?>
+                        
 
                     {!! Form::open(array('route' => array('post.partner.promotion.remove', $idRestaurant))) !!}
 
@@ -31,6 +27,9 @@
                             <a href="{{route('get.partner.promotion.create', array('idRestaurant' => $idRestaurant))}}"><i class="fa fa-plus" style="font-size: 0.8em"></i> Add new promotion</a> | 
 
                              <a href="{{route('get.partner.restaurant.list', $idRestaurant)}}"><i class="fa fa-reply-all" style="font-size: 0.8em"></i> List Restaurant</a>
+                        </div>
+                        <div>
+                            
                         </div>
                         <table class="table table-hover">
                             <tbody>
@@ -45,14 +44,13 @@
                                         <th>Sửa</th>
                                         <th>Xóa</th>
                                     </tr>
-
+                                    
                                     @forelse($ArrayListPromotion['data'] as $key => $eachPromotion)
-
+                                    <tr>
                                         <th>{{$key+1}}</th>
                                         <th>{{$eachPromotion['name']}}</th>
                                         <?php
                                             $startDate = date_create($eachPromotion['start_date']);
-
                                             $endDate   = date_create($eachPromotion['end_date']);
                                         ?>
                                         <th>{{date_format($startDate,"Y/m/d")}}</th>
@@ -62,7 +60,7 @@
                                         <th>{{$eachPromotion['description']}}</th>
                                         <th><a href="{{route('get.partner.promotion.update', ['idPromotion' => $eachPromotion['_id']])}}"><i class="fa fa-edit"></i></a></th>
                                         <th><input type="checkbox" class="chooseUser" name="remove[{{ $eachPromotion['_id'] }}]"></th>
-                                        
+                                    </tr>
                                     @empty
                                     <tr>
                                         <td colspan="12" style="text-align: center">{{ $notExistData }}</td> 
@@ -95,10 +93,13 @@
 
 @section("bonusJs")
     <script type="text/javascript" src="{{ url('public/admin/js/custom.js') }}"></script>
+
     <script type="text/javascript">
         var base_url = "<?php echo route('get.admin.search.list'); ?>";
         $(document).ready(function(){
             $('#search_page').val('list');
+
+        
             $('#submit').on('click', function(){
                 $check = $('.chooseUser').is(":checked");
                 if(!$check){

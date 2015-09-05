@@ -83,10 +83,13 @@
 
 @section("bonusJs")
     <script type="text/javascript" src="{{ url('public/admin/js/custom.js') }}"></script>
+    
+    
     <script type="text/javascript">
         var base_url = "<?php echo route('get.admin.search.list'); ?>";
         $(document).ready(function(){
             $('#search_page').val('list');
+           
         })
     </script>
     <script type="text/javascript" src="{{ url('public/admin/js/ajax.js') }}"></script>
