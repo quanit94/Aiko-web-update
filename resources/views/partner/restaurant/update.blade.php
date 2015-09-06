@@ -21,7 +21,24 @@ $id = $restaurantOld['data']['_id'];
             @include('message.message')
             {!! Form::open(array('route' => array('post.partner.restaurant.update',$id),'files' => true)) !!}
             <div class="box-body">
+            <?php
 
+                    $breakfast = '0';
+                    $lunch = '0';
+                    $dinner = '0';
+
+                    foreach ($restaurantOld['data']['meals'] as $key => $value) {
+                        if($key == 'breakfast') $breakfast = $value;
+                        if($key == 'lunch')     $lunch = $value;
+                        if($key == 'dinner')    $dinner = $value;
+                    }
+                    $is_provided = '0';
+                    if($restaurantOld['data']['shipping']['is_provided'])
+                        $is_provided = '1';
+
+               
+            ?>
+          
                 <div class="form-group">
                     <label>Name</label>
                     {!! Form::text('name',old('name',$restaurantOld['data']['name']),array('class' => 'form-control', 'placeholder' => 'Enter name')) !!}
@@ -34,16 +51,16 @@ $id = $restaurantOld['data']['_id'];
                     {!! Form::file('cover_photo') !!}
                     <p class="help-block">Upload restaurant's image at here</p>
                 </div>
-
+               
                 <div class="checkbox">
                     <label>
-                        {!! Form::checkbox('is_active', 'true', true) !!} <b>Activate</b>
+                        {!! Form::checkbox('is_active', 'true', $restaurantOld['data']['is_active']) !!} <b>Activate</b>
                     </label>
                 </div>
 
                 <div class="checkbox">
                     <label>
-                        {!! Form::checkbox('__v', 0, true) !!} <b>__V</b> 
+                        {!! Form::checkbox('__v', 0, $restaurantOld['data']['__v']) !!} <b>__V</b> 
                     </label>
                 </div>
 
@@ -53,7 +70,7 @@ $id = $restaurantOld['data']['_id'];
                     <div class="col-xs-11 col-xs-offset-1">
                         <div class="checkbox">
                             <label>
-                                {!! Form::checkbox("shipping[is_provided]", 'true', true) !!}
+                                {!! Form::checkbox("shipping[is_provided]", 'true', $is_provided) !!}
                                 <b>Provided</b>
                             </label>
                         </div>
@@ -69,25 +86,27 @@ $id = $restaurantOld['data']['_id'];
                         </div>
                     </div>
                 </div>
-
+                
+          
+                 
                 <div class="form-group">
                     <label>Meals</label>
                     <div class="col-xs-11 col-xs-offset-1">
                         <div class="checkbox">
                             <label>
-                                {!! Form::checkbox('meals[breakfast]', 'true', true) !!}
+                                {!! Form::checkbox('meals[breakfast]', 'true', $breakfast) !!}
                                 <b>Breakfast</b>
                             </label>
                         </div>
                         <div class="checkbox">
                             <label>
-                                {!! Form::checkbox('meals[lunch]', 'true', true) !!}
+                                {!! Form::checkbox('meals[lunch]', 'true', $lunch) !!}
                                 <b>Lunch</b>
                             </label>
                         </div>
                         <div class="checkbox">
                             <label>
-                                {!! Form::checkbox('meals[dinner]', 'true', true) !!}
+                                {!! Form::checkbox('meals[dinner]', 'true', $dinner) !!}
                                 <b>Dinner</b>
                             </label>
                         </div>

@@ -20,6 +20,8 @@ class HomeController extends Controller
 	}
 
     public function getDashboard01(){
+    
+
         return view('admin.home.dashboard_01')->with('titlePage','Aiko | Dashboard 01');
     }
 
